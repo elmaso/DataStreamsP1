@@ -30,6 +30,7 @@ class Station(Producer):
             .replace("-", "_")
             .replace("'", "")
         )
+        topic_prefix = "org.chicago.cta.station.arrivals"
 
         #
         #
@@ -37,13 +38,13 @@ class Station(Producer):
         # replicas
         #
         #
-        topic_name = f"{station_name}" # TODO: Come up with a better topic name
+        topic_name = f"{topic_prefix}.{station_name}" # TODO: Come up with a better topic name
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,
-            # TODO: value_schema=Station.value_schema, # TODO: Uncomment once schema is defined
-            # TODO: num_partitions=???,
-            # TODO: num_replicas=???,
+            value_schema=Station.value_schema, # TODO: Uncomment once schema is defined
+            num_partitions=1, #Setting to 1 wile is in localmode
+            num_replicas=1, #Setting to 1 wile is in localmode
         )
 
         self.station_id = int(station_id)
@@ -63,17 +64,19 @@ class Station(Producer):
         #
         #
         logger.info("arrival kafka integration incomplete - skipping")
-        #self.producer.produce(
-        #    topic=self.topic_name,
-        #    key={"timestamp": self.time_millis()},
-        #    value={
-        #        #
-        #        #
-        #        # TODO: Configure this
-        #        #
-        #        #
-        #    },
-        #)
+        self.producer.produce(
+           topic=self.topic_name,
+           key={"timestamp": self.time_millis()},
+           value={
+                "station_id": self.station_id,
+                "train_id": train.train_id,
+                "direction": direction,
+                "line": self.color.name,
+                "train_status": train.status.name,
+                "prev_station_id": prev_station_id,
+                "prev_direction": prev_direction,
+           },
+        )
 
     def __str__(self):
         return "Station | {:^5} | {:<30} | Direction A: | {:^5} | departing to {:<30} | Direction B: | {:^5} | departing to {:<30} | ".format(
