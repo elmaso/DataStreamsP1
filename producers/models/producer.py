@@ -1,4 +1,4 @@
-"""Producer base-class providing common utilites and functionality"""
+"""Producer base-class providing common utilities and functionality"""
 import logging
 import time
 
