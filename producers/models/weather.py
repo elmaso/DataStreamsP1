@@ -32,12 +32,12 @@ class Weather(Producer):
     def __init__(self, month):
         #
         #
-        # TODO: Complete the below by deciding on a topic name, number of partitions, and number of
+        # DONE: Complete the below by deciding on a topic name, number of partitions, and number of
         # replicas
         #
         #
         super().__init__(
-            "weather", # TODO: Come up with a better topic name
+            "weather", # DONE: Come up with a better topic name
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
         )
@@ -54,7 +54,7 @@ class Weather(Producer):
                 Weather.key_schema = json.load(f)
 
         #
-        # TODO: Define this value schema in `schemas/weather_value.json
+        # DONE: Define this value schema in `schemas/weather_value.json
         #
         if Weather.value_schema is None:
             with open(f"{Path(__file__).parents[0]}/schemas/weather_value.json") as f:
@@ -75,7 +75,7 @@ class Weather(Producer):
 
         #
         #
-        # TODO: Complete the function by posting a weather event to REST Proxy. Make sure to
+        # DONE: Complete the function by posting a weather event to REST Proxy. Make sure to
         # specify the Avro schemas and verify that you are using the correct Content-Type header.
         #
         #
@@ -83,13 +83,13 @@ class Weather(Producer):
         resp = requests.post(
         #    #
         #    #
-        #    # TODO: What URL should be POSTed to?
+        #    # DONE: What URL should be POSTed to?
         #    #
         #    #
             f"{Weather.rest_proxy_url}/topics/{self.topic_name}",
         #    #
         #    #
-        #    # TODO: What Headers need to bet set?
+        #    # DONE: What Headers need to bet set?
         #    #
         #    #
             headers={"Content-Type": "application/vnd.kafka.avro.v2+json"},

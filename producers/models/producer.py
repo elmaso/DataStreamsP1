@@ -60,7 +60,7 @@ class Producer:
         """Creates the producer topic if it does not already exist"""
         #
         #
-        # TODO: Write code that creates the topic for this producer if it does not already exist on
+        # DONE: Write code that creates the topic for this producer if it does not already exist on
         # the Kafka Broker.
         
         # Only Create new topic if topic_name does not already exist
@@ -99,7 +99,7 @@ class Producer:
         """Prepares the producer for exit by cleaning up the producer"""
         #
         #
-        # TODO: Write cleanup code for the Producer here
+        # DONE: Write cleanup code for the Producer here
         #
         #
         if self.producer is not None:
