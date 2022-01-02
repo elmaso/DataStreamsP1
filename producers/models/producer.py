@@ -38,9 +38,9 @@ class Producer:
         #
         #
         self.broker_properties = {
-            ZOOKEEPER_CONNECT_CONFIG: "localhost:2181",
-            BOOTSTRAP_SERVERS_CONFIG: "localhost:9092",
-            SCHEMA_REGISTRY_URL_CONFIG: "http://localhost:8081",
+            "ZOOKEEPER_CONNECT_CONFIG": "localhost:2181",
+            "BOOTSTRAP_SERVERS_CONFIG": "localhost:9092",
+            "SCHEMA_REGISTRY_URL_CONFIG": "http://localhost:8081",
         }
 
         # If the topic does not already exist, try to create it
@@ -82,9 +82,9 @@ class Producer:
             for topic, f in future.items():
                 try:
                     f.result()
-                    print("Topic {} created".format(topic))
+                    print(f"Topic {topic} created")
                 except Exception as e:
-                    print("Failed to create topic {}: {}".format(topic, e))
+                    print(f"Failed to create topic {topic}: {e}")
         
         # We leve a log of all existing topics retries
         if self.topic_name in Producer.existing_topics:

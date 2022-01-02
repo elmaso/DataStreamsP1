@@ -17,12 +17,13 @@ class Turnstile(Producer):
     #
     # DONE: Define this value schema in `schemas/turnstile_value.json, then uncomment the below
     #
-    #value_schema = avro.load(
-    #    f"{Path(__file__).parents[0]}/schemas/turnstile_value.json"
-    #)
+    value_schema = avro.load(
+       f"{Path(__file__).parents[0]}/schemas/turnstile_value.json"
+    )
 
     def __init__(self, station):
         """Create the Turnstile"""
+        topic_prefix = "org.chicago.cta.turnstile."
         station_name = (
             station.name.lower()
             .replace("/", "_and_")
@@ -30,7 +31,6 @@ class Turnstile(Producer):
             .replace("-", "_")
             .replace("'", "")
         )
-        topic_prefix = "org.chicago.cta.turnstile"
 
         #
         #
@@ -38,8 +38,9 @@ class Turnstile(Producer):
         # replicas
         #
         #
+        # DONE: Come up with a better topic name
         super().__init__(
-            f"{topic_prefix}", # DONE: Come up with a better topic name
+            f"{topic_prefix}{station_name}",
             key_schema=Turnstile.key_schema,
             value_schema=Turnstile.value_schema, #DONE: Uncomment once schema is defined
             num_partitions=1,  # Setting to 1 wile is in localmode

@@ -62,7 +62,7 @@ class KafkaConsumer:
         """Callback for when topic assignment takes place"""
         # DONE: If the topic is configured to use `offset_earliest` set the partition offset to
         # the beginning or earliest
-        logger.info("on_assign is incomplete - skipping")
+        logger.info("on_assign DONE")
         for partition in partitions:
             if self.offset_earliest:
                 partition.offset = confluent_kafka.OFFSET_BEGINNING
@@ -86,7 +86,7 @@ class KafkaConsumer:
         # is retrieved.
         #
         #
-        logger.info("_consume is incomplete - skipping")
+        logger.info("_consume begin test:")
         message = self.consumer.poll(1.0)
         if message is None:
             logger.info('Consummer has no messages')

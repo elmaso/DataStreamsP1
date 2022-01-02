@@ -19,9 +19,10 @@ class Station(Producer):
     #
     # DONE: Define this value schema in `schemas/station_value.json, then uncomment the below
     #
-    #value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_value.json")
+    value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_value.json")
 
     def __init__(self, station_id, name, color, direction_a=None, direction_b=None):
+        topic_prefix = "org.chicago.cta.station.arrivals."
         self.name = name
         station_name = (
             self.name.lower()
@@ -30,15 +31,13 @@ class Station(Producer):
             .replace("-", "_")
             .replace("'", "")
         )
-        topic_prefix = "org.chicago.cta.station.arrivals"
-
         #
         #
         # DONE: Complete the below by deciding on a topic name, number of partitions, and number of
         # replicas
         #
         #
-        topic_name = f"{topic_prefix}.{station_name}" # DONE: Come up with a better topic name
+        topic_name = f"{topic_prefix}{station_name}" # DONE: Come up with a better topic name
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,
